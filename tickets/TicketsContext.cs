@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using tickets.Models;
 
 namespace tickets
 {
-    public partial class ticketsContext : DbContext
+    public partial class TicketsContext : DbContext
     {
-        public ticketsContext()
+        public TicketsContext()
         {
         }
 
-        public ticketsContext(DbContextOptions<ticketsContext> options)
+        public TicketsContext(DbContextOptions<TicketsContext> options)
             : base(options)
         {
         }
