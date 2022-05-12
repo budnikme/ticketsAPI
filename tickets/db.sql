@@ -153,5 +153,9 @@ alter table tickets.ticketTypes
         primary key (id, event_id)
 go
 
+alter table tickets.ticketTypes
+    add count int
+go
+
 
 
