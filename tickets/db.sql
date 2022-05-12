@@ -156,6 +156,10 @@ go
 alter table tickets.ticketTypes
     add count int
 go
+--add password_salt to users table
+alter table tickets.users
+    add password_salt varchar(64)
+go
 
 
 
