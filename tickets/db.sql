@@ -141,7 +141,7 @@ create table tickets.payments
     transaction_id uniqueidentifier
 )
 go
-
+--add event_id to primary key
 alter table tickets.ticketTypes
     alter column event_id int not null
 
@@ -152,7 +152,7 @@ alter table tickets.ticketTypes
     add constraint ticketTypes_pk
         primary key (id, event_id)
 go
-
+--ad count to ticketTypes table
 alter table tickets.ticketTypes
     add count int
 go
