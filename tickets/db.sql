@@ -142,5 +142,16 @@ create table tickets.payments
 )
 go
 
+alter table tickets.ticketTypes
+    alter column event_id int not null
+
+alter table tickets.ticketTypes
+    drop constraint ticketTypes_pk
+
+alter table tickets.ticketTypes
+    add constraint ticketTypes_pk
+        primary key (id, event_id)
+go
+
 
 
