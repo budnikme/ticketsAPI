@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace tickets.Models
+﻿namespace tickets.Models.Entities
 {
     public partial class Event
     {

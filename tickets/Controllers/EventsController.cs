@@ -14,5 +14,5 @@ public class EventsController : ControllerBase
         _logger = logger;
     }
 
-    
+
 }
