@@ -1,4 +1,5 @@
 using tickets;
+using tickets.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TicketsContext>();
-
+builder.Services.AddScoped<IEventsService, EventsService>();
+ 
 
 var app = builder.Build();
 

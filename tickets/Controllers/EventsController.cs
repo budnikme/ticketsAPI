@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using tickets.Dto;
+using tickets.Models;
+using tickets.Services;
+
 
 namespace tickets.Controllers;
 
@@ -7,12 +10,23 @@ namespace tickets.Controllers;
 [ApiController]
 public class EventsController : ControllerBase
 {
-    private readonly ILogger<EventsController> _logger;
+    private readonly IEventsService _eventsService;
 
-    public EventsController(ILogger<EventsController> logger)
+    public EventsController(IEventsService eventsService)
     {
-        _logger = logger;
+        _eventsService = eventsService;
     }
 
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<List<EventDto>>>> GetEvents()
+    {
+        ServiceResponse<List<EventDto>> response = await _eventsService.Show();
+        if (response.Success == false)
+        {
+            return NotFound(response);
+        }
+        return Ok(response);
+    }
 
+    
 }
