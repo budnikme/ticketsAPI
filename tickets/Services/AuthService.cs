@@ -45,27 +45,27 @@ public class AuthService : IAuthService
         {
             return null;
         }
-        return CreateToken(userDto.Email);
+        return CreateToken(user.Id);
     }
 
     public async Task<string?> Login(LoginDto loginDto)
     {
         var currentUser = await (from user in _context.Users
             where user.Email == loginDto.Email
-            select new {user.PasswordHash, user.PasswordSalt, user.Type}).FirstAsync();
+            select new {user.Id,user.PasswordHash, user.PasswordSalt, user.Type}).FirstAsync();
         if (VerifyPasswordHash(loginDto.Password, currentUser.PasswordHash,
                 currentUser.PasswordSalt))
         {
-            return CreateToken(loginDto.Email,currentUser.Type);
+            return CreateToken(currentUser.Id,currentUser.Type);
         }
         return null;
     }
     
-    private string CreateToken(string email, string type="User")
+    private string CreateToken(int userId, string type="User")
     {
         List<Claim> claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Email, email),
+            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
             new Claim(ClaimTypes.Role, type)
         };
 
