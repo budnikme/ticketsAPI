@@ -12,18 +12,18 @@ namespace tickets.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
-    private readonly string _user;
+    private readonly int _userId;
 
     public UserController(IUserService userService,IHttpContextAccessor httpContextAccessor)
     {
         _userService = userService;
         //getting users id
-        _user = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        _userId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
     }
     [HttpGet,Authorize(Roles="User")]
     public async Task<ActionResult<ServiceResponse<UserViewDto>>> GetMe()
     {
-        ServiceResponse<UserViewDto> response = await _userService.GetMe(int.Parse(_user));
+        ServiceResponse<UserViewDto> response = await _userService.GetMe(_userId);
         if (response.Success == false)
         {
             return BadRequest(response);
