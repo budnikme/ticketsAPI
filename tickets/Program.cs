@@ -19,7 +19,7 @@ builder.Services.AddDbContext<TicketsContext>(); //add db context
 builder.Services.AddScoped<IEventsService, EventsService>(); //eventsService dependency injection
 builder.Services.AddScoped<IAuthService, AuthService>(); //authService dependency injection
 builder.Services.AddScoped<IUserService, UserService>(); //userService dependency injection
-
+builder.Services.AddScoped<ITicketsService, TicketsService>(); //ticketsService dependency injection
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen(options => {
