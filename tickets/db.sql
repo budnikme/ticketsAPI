@@ -226,6 +226,24 @@ alter table tickets.tickets
     add constraint tickets_payments_id_fk
         foreign key (payment_id) references tickets.payments
 go
+--drop unnecessary fields and add sum field in paymnts tables 
+alter table tickets.payments
+    drop constraint payments_events_id_fk
+go
 
+alter table tickets.payments
+    drop constraint payments_users_id_fk
+go
+alter table tickets.payments
+    drop column user_id
+go
+
+alter table tickets.payments
+    drop column event_id
+go
+
+alter table tickets.payments
+    add sum decimal(10, 2)
+go
 
 
