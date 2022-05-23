@@ -183,5 +183,26 @@ alter table tickets.users
     add type varchar(32)
 go
 
+--make password hash and salt not null 
+alter table tickets.users
+    alter column password_hash varbinary(64) not null
+go
+
+alter table tickets.users
+    alter column password_salt varbinary(64) not null
+go
+--make email primary key
+alter table tickets.users
+    add constraint users_email_pk
+        unique (email)
+go
+--change password and hash length to 512 
+alter table tickets.users
+    alter column password_salt varbinary(512) not null
+go
+--user type not null
+alter table tickets.users
+    alter column type varchar(32) not null
+go
 
 
