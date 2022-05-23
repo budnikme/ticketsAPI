@@ -217,5 +217,15 @@ alter table tickets.tickets
     add constraint tickets_ticketTypes_id_event_id_fk
         foreign key (ticketType_id, event_id) references tickets.ticketTypes
 go
+--add payment_id to tickets table
+alter table tickets.tickets
+    add payment_id int
+go
+
+alter table tickets.tickets
+    add constraint tickets_payments_id_fk
+        foreign key (payment_id) references tickets.payments
+go
+
 
 
