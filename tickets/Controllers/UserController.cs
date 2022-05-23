@@ -20,7 +20,7 @@ public class UserController : ControllerBase
         //getting users id
         _userId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
     }
-    [HttpGet,Authorize(Roles="User")]
+    [HttpGet,Authorize]
     public async Task<ActionResult<ServiceResponse<UserViewDto>>> GetMe()
     {
         ServiceResponse<UserViewDto> response = await _userService.GetMe(_userId);
