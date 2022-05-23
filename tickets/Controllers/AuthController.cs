@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using tickets.Dto;
+using tickets.Services;
 
 namespace tickets.Controllers;
 
@@ -7,11 +8,35 @@ namespace tickets.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly ILogger<AuthController> _logger;
+    private readonly IAuthService _authService;
 
-    public AuthController(ILogger<AuthController> logger)
+    public AuthController(IAuthService authService)
     {
-        _logger = logger;
+        _authService = authService;
+    }
+
+    [HttpPost("register")]
+    public async Task<ActionResult> Register(UserDto userDto)
+    {
+        var token = await _authService.Register(userDto);
+        if (token==null)
+        {
+            return BadRequest("User already exists");
+        }
+
+        return Ok(token);
+        
+    }
+
+    [HttpPost("login")]
+    public async Task<ActionResult<string>> Login(LoginDto loginDto)
+    {
+        var token = await _authService.Login(loginDto);
+        if (token == null)
+        {
+            return BadRequest("Wrong Email or Password");
+        }
+        return Ok(token);
     }
 
     

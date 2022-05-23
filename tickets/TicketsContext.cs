@@ -20,6 +20,7 @@ namespace tickets
         public virtual DbSet<Artist> Artists { get; set; } = null!;
         public virtual DbSet<Event> Events { get; set; } = null!;
         public virtual DbSet<Genre> Genres { get; set; } = null!;
+        public virtual DbSet<GetEvent> GetEvents { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<Place> Places { get; set; } = null!;
         public virtual DbSet<Ticket> Tickets { get; set; } = null!;
@@ -141,6 +142,37 @@ namespace tickets
                     .HasColumnName("genre");
             });
 
+            modelBuilder.Entity<GetEvent>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("getEvents");
+
+                entity.Property(e => e.City)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.Place)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PosterLink)
+                    .HasMaxLength(2048)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PreviewLink)
+                    .HasMaxLength(2048)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Tittle)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Payment>(entity =>
             {
                 entity.ToTable("payments", "tickets");
@@ -219,16 +251,23 @@ namespace tickets
 
             modelBuilder.Entity<TicketType>(entity =>
             {
+                entity.HasKey(e => new { e.Id, e.EventId })
+                    .HasName("ticketTypes_pk");
+
                 entity.ToTable("ticketTypes", "tickets");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.EventId).HasColumnName("event_id");
+
+                entity.Property(e => e.Count).HasColumnName("count");
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("description");
-
-                entity.Property(e => e.EventId).HasColumnName("event_id");
 
                 entity.Property(e => e.Price)
                     .HasColumnType("decimal(10, 2)")
@@ -242,12 +281,16 @@ namespace tickets
                 entity.HasOne(d => d.Event)
                     .WithMany(p => p.TicketTypes)
                     .HasForeignKey(d => d.EventId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("ticketTypes_events_id_fk");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("users", "tickets");
+
+                entity.HasIndex(e => e.Email, "users_email_pk")
+                    .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -267,14 +310,22 @@ namespace tickets
                     .HasColumnName("name");
 
                 entity.Property(e => e.PasswordHash)
-                    .HasMaxLength(64)
-                    .IsUnicode(false)
+                    .HasMaxLength(512)
                     .HasColumnName("password_hash");
+
+                entity.Property(e => e.PasswordSalt)
+                    .HasMaxLength(512)
+                    .HasColumnName("password_salt");
 
                 entity.Property(e => e.PhoneNumber)
                     .HasMaxLength(15)
                     .IsUnicode(false)
                     .HasColumnName("phone_number");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("type");
             });
 
             OnModelCreatingPartial(modelBuilder);
