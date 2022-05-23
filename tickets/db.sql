@@ -161,5 +161,22 @@ alter table tickets.users
     add password_salt varchar(64)
 go
 
+--change password hash and salt types to varbinary 
+alter table tickets.users
+    drop column password_hash
+go
+
+alter table tickets.users
+    drop column password_salt
+go
+
+alter table tickets.users
+    add password_hash varbinary(64)
+go
+
+alter table tickets.users
+    add password_salt varbinary(64)
+go
+
 
 
