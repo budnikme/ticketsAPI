@@ -178,5 +178,10 @@ alter table tickets.users
     add password_salt varbinary(64)
 go
 
+--add user type 
+alter table tickets.users
+    add type varchar(32)
+go
+
 
 
