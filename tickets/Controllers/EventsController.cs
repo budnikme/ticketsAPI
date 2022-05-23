@@ -28,7 +28,7 @@ public class EventsController : ControllerBase
         return Ok(response);
     }
     
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<ServiceResponse<FullEventDto>>> GetFullEvent(int id)
     {
         ServiceResponse<FullEventDto> response = await _eventsService.ShowFull(id);
