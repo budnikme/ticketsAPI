@@ -204,5 +204,18 @@ go
 alter table tickets.users
     alter column type varchar(32) not null
 go
+--add ticketTypes id to tickets table 
+alter table tickets.tickets
+    add ticketType_id int
+go
+
+alter table tickets.tickets
+    drop constraint tickets_events_id_fk
+go
+
+alter table tickets.tickets
+    add constraint tickets_ticketTypes_id_event_id_fk
+        foreign key (ticketType_id, event_id) references tickets.ticketTypes
+go
 
 
