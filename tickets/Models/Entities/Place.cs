@@ -1,4 +1,7 @@
-﻿namespace tickets.Models.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace tickets.Models.Entities
 {
     public partial class Place
     {

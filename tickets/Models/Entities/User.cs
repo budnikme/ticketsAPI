@@ -7,7 +7,6 @@ namespace tickets.Models.Entities
     {
         public User()
         {
-            Payments = new HashSet<Payment>();
             Tickets = new HashSet<Ticket>();
         }
 
@@ -18,9 +17,8 @@ namespace tickets.Models.Entities
         public string? PhoneNumber { get; set; }
         public byte[] PasswordHash { get; set; } = null!;
         public byte[] PasswordSalt { get; set; } = null!;
-        public string Type { get; set; }
+        public string Type { get; set; } = null!;
 
-        public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

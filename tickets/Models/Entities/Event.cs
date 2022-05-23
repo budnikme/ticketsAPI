@@ -1,12 +1,13 @@
-﻿namespace tickets.Models.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace tickets.Models.Entities
 {
     public partial class Event
     {
         public Event()
         {
-            Payments = new HashSet<Payment>();
             TicketTypes = new HashSet<TicketType>();
-            Tickets = new HashSet<Ticket>();
             Artists = new HashSet<Artist>();
             Genres = new HashSet<Genre>();
         }
@@ -21,9 +22,7 @@
         public string? PosterLink { get; set; }
 
         public virtual Place? Place { get; set; }
-        public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<TicketType> TicketTypes { get; set; }
-        public virtual ICollection<Ticket> Tickets { get; set; }
 
         public virtual ICollection<Artist> Artists { get; set; }
         public virtual ICollection<Genre> Genres { get; set; }

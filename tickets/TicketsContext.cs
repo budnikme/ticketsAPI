@@ -183,25 +183,15 @@ namespace tickets
                     .HasColumnName("confirmed")
                     .HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.EventId).HasColumnName("event_id");
+                entity.Property(e => e.Sum)
+                    .HasColumnType("decimal(10, 2)")
+                    .HasColumnName("sum");
 
                 entity.Property(e => e.Time)
                     .HasColumnType("datetime")
                     .HasColumnName("time");
 
                 entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
-
-                entity.Property(e => e.UserId).HasColumnName("user_id");
-
-                entity.HasOne(d => d.Event)
-                    .WithMany(p => p.Payments)
-                    .HasForeignKey(d => d.EventId)
-                    .HasConstraintName("payments_events_id_fk");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Payments)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("payments_users_id_fk");
             });
 
             modelBuilder.Entity<Place>(entity =>
@@ -236,17 +226,26 @@ namespace tickets
 
                 entity.Property(e => e.EventId).HasColumnName("event_id");
 
+                entity.Property(e => e.PaymentId).HasColumnName("payment_id");
+
+                entity.Property(e => e.TicketTypeId).HasColumnName("ticketType_id");
+
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
-                entity.HasOne(d => d.Event)
+                entity.HasOne(d => d.Payment)
                     .WithMany(p => p.Tickets)
-                    .HasForeignKey(d => d.EventId)
-                    .HasConstraintName("tickets_events_id_fk");
+                    .HasForeignKey(d => d.PaymentId)
+                    .HasConstraintName("tickets_payments_id_fk");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Tickets)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("tickets_users_id_fk");
+
+                entity.HasOne(d => d.TicketType)
+                    .WithMany(p => p.Tickets)
+                    .HasForeignKey(d => new { d.TicketTypeId, d.EventId })
+                    .HasConstraintName("tickets_ticketTypes_id_event_id_fk");
             });
 
             modelBuilder.Entity<TicketType>(entity =>
@@ -310,7 +309,7 @@ namespace tickets
                     .HasColumnName("name");
 
                 entity.Property(e => e.PasswordHash)
-                    .HasMaxLength(512)
+                    .HasMaxLength(64)
                     .HasColumnName("password_hash");
 
                 entity.Property(e => e.PasswordSalt)
