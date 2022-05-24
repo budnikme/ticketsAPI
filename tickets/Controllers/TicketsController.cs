@@ -12,13 +12,14 @@ namespace tickets.Controllers;
 public class TicketsController : ControllerBase
 {
     private readonly ITicketsService _ticketsService;
-    private readonly int _userId;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
 
     public TicketsController(ITicketsService ticketsService,IHttpContextAccessor httpContextAccessor)
     {
         _ticketsService=ticketsService;
-        //getting users id
-        _userId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        _httpContextAccessor = httpContextAccessor;
+
     }
 
     [HttpGet("{eventId:int}")]
@@ -35,7 +36,9 @@ public class TicketsController : ControllerBase
     [HttpGet("my"),Authorize]
     public async Task<ActionResult<ServiceResponse<List<TicketsDto>>>> GetUserTickets()
     {
-        ServiceResponse<List<TicketsDto>> response = await _ticketsService.GetUserTickets(_userId);
+        //getting userId
+        int userId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        ServiceResponse<List<TicketsDto>> response = await _ticketsService.GetUserTickets(userId);
         if (response.Success == false)
         {
             return NotFound(response);
