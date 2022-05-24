@@ -57,8 +57,8 @@ namespace tickets
                     .WithMany(p => p.Artists)
                     .UsingEntity<Dictionary<string, object>>(
                         "EventArtist",
-                        l => l.HasOne<Event>().WithMany().HasForeignKey("EventId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("eventArtists_events_id_fk"),
-                        r => r.HasOne<Artist>().WithMany().HasForeignKey("ArtistId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("eventArtists_artists_id_fk"),
+                        l => l.HasOne<Event>().WithMany().HasForeignKey("EventId").HasConstraintName("eventArtists_events_id_fk"),
+                        r => r.HasOne<Artist>().WithMany().HasForeignKey("ArtistId").HasConstraintName("eventArtists_artists_id_fk"),
                         j =>
                         {
                             j.HasKey("ArtistId", "EventId").HasName("eventArtists_pk");
@@ -116,8 +116,8 @@ namespace tickets
                     .WithMany(p => p.Events)
                     .UsingEntity<Dictionary<string, object>>(
                         "EventGenre",
-                        l => l.HasOne<Genre>().WithMany().HasForeignKey("GenreId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("eventGenres_genres_id_fk"),
-                        r => r.HasOne<Event>().WithMany().HasForeignKey("EventId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("eventGenres_events_id_fk"),
+                        l => l.HasOne<Genre>().WithMany().HasForeignKey("GenreId").HasConstraintName("eventGenres_genres_id_fk"),
+                        r => r.HasOne<Event>().WithMany().HasForeignKey("EventId").HasConstraintName("eventGenres_events_id_fk"),
                         j =>
                         {
                             j.HasKey("EventId", "GenreId").HasName("eventGenres_pk");
@@ -280,7 +280,6 @@ namespace tickets
                 entity.HasOne(d => d.Event)
                     .WithMany(p => p.TicketTypes)
                     .HasForeignKey(d => d.EventId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("ticketTypes_events_id_fk");
             });
 

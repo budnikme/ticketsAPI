@@ -245,5 +245,55 @@ go
 alter table tickets.payments
     add sum decimal(10, 2)
 go
+--enable cascade deletes
+alter table tickets.eventArtists
+    drop constraint eventArtists_artists_id_fk
+go
 
+alter table tickets.eventArtists
+    add constraint eventArtists_artists_id_fk
+        foreign key (artist_id) references tickets.artists
+            on delete cascade
+go
+
+alter table tickets.eventArtists
+    drop constraint eventArtists_events_id_fk
+go
+
+alter table tickets.eventArtists
+    add constraint eventArtists_events_id_fk
+        foreign key (event_id) references tickets.events
+            on delete cascade
+go
+
+alter table tickets.eventGenres
+    drop constraint eventGenres_events_id_fk
+go
+
+alter table tickets.eventGenres
+    add constraint eventGenres_events_id_fk
+        foreign key (event_id) references tickets.events
+            on delete cascade
+go
+
+alter table tickets.eventGenres
+    drop constraint eventGenres_genres_id_fk
+go
+
+alter table tickets.eventGenres
+    add constraint eventGenres_genres_id_fk
+        foreign key (genre_id) references tickets.genres
+            on delete cascade
+go
+
+
+alter table tickets.ticketTypes
+    drop constraint ticketTypes_events_id_fk
+go
+
+alter table tickets.ticketTypes
+    add constraint ticketTypes_events_id_fk
+        foreign key (event_id) references tickets.events
+            on delete cascade
+go
 
