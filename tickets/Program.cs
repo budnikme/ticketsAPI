@@ -20,6 +20,7 @@ builder.Services.AddScoped<IEventsService, EventsService>(); //eventsService dep
 builder.Services.AddScoped<IAuthService, AuthService>(); //authService dependency injection
 builder.Services.AddScoped<IUserService, UserService>(); //userService dependency injection
 builder.Services.AddScoped<ITicketsService, TicketsService>(); //ticketsService dependency injection
+builder.Services.AddScoped<IAdminService, AdminService>(); //adminService dependency injection
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen(options => {
