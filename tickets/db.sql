@@ -297,3 +297,14 @@ alter table tickets.ticketTypes
             on delete cascade
 go
 
+--add user id foreign key to payment table
+alter table tickets.payments
+    add user_id int
+go
+
+alter table tickets.payments
+    add constraint payments_users_id_fk
+        foreign key (user_id) references tickets.users
+            on delete cascade
+go
+
