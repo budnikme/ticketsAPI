@@ -6,7 +6,7 @@ namespace tickets.Services;
 
 public class ArtistsService : IArtistsService
 {
-    public readonly TicketsContext _context;
+    private readonly TicketsContext _context;
 
     public ArtistsService(TicketsContext context)
     {
