@@ -23,8 +23,8 @@ public class TicketsService : ITicketsService
                 {
                     Tittle = t.Tittle,
                     Description = t.Description,
-                    count = t.Count,
-                    price = t.Price,
+                    Count = t.Count,
+                    Price = t.Price,
                 }).ToListAsync();
             response.Data = query;
         }
