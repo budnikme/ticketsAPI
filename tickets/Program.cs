@@ -21,6 +21,7 @@ builder.Services.AddScoped<IAuthService, AuthService>(); //authService dependenc
 builder.Services.AddScoped<IUserService, UserService>(); //userService dependency injection
 builder.Services.AddScoped<ITicketsService, TicketsService>(); //ticketsService dependency injection
 builder.Services.AddScoped<IAdminService, AdminService>(); //adminService dependency injection
+builder.Services.AddScoped<IArtistsService,ArtistsService>(); //artistsService dependency injection
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen(options => {
