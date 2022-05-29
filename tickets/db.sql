@@ -308,3 +308,29 @@ alter table tickets.payments
             on delete cascade
 go
 
+--add table for payment tokens
+create table tickets.paymentTokens
+(
+    id    int identity
+        constraint paymentTokens_pk
+            primary key,
+    token varchar(32)
+)
+go
+
+create table tickets.table_name
+(
+    user_id  int
+        constraint table_name_users_id_fk
+            references tickets.users
+            on delete cascade,
+    token_id int
+        constraint table_name_paymentTokens_id_fk
+            references tickets.paymentTokens
+            on delete cascade,
+    constraint table_name_pk
+        primary key (user_id, token_id)
+)
+go
+
+

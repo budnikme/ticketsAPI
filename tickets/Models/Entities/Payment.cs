@@ -15,7 +15,9 @@ namespace tickets.Models.Entities
         public byte? Confirmed { get; set; }
         public Guid? TransactionId { get; set; }
         public decimal? Sum { get; set; }
+        public int? UserId { get; set; }
 
+        public virtual User? User { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }
