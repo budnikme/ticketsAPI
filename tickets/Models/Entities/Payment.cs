@@ -13,7 +13,7 @@ namespace tickets.Models.Entities
         public int Id { get; set; }
         public DateTime? Time { get; set; }
         public byte? Confirmed { get; set; }
-        public Guid? TransactionId { get; set; }
+        public string? TransactionId { get; set; }
         public decimal? Sum { get; set; }
         public int? UserId { get; set; }
 

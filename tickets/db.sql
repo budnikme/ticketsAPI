@@ -332,5 +332,13 @@ create table tickets.table_name
         primary key (user_id, token_id)
 )
 go
+-- rename table
+exec sp_rename 'tickets.table_name', userTokens, 'OBJECT'
+go
+
+-- change transaction_id datatype to varachar 32
+alter table tickets.payments
+    alter column transaction_id varchar(32) null
+go
 
 

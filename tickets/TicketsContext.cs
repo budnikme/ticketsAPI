@@ -192,7 +192,10 @@ namespace tickets
                     .HasColumnType("datetime")
                     .HasColumnName("time");
 
-                entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
+                entity.Property(e => e.TransactionId)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("transaction_id");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
@@ -349,14 +352,14 @@ namespace tickets
                 entity.HasMany(d => d.Tokens)
                     .WithMany(p => p.Users)
                     .UsingEntity<Dictionary<string, object>>(
-                        "TableName",
+                        "UserToken",
                         l => l.HasOne<PaymentToken>().WithMany().HasForeignKey("TokenId").HasConstraintName("table_name_paymentTokens_id_fk"),
                         r => r.HasOne<User>().WithMany().HasForeignKey("UserId").HasConstraintName("table_name_users_id_fk"),
                         j =>
                         {
                             j.HasKey("UserId", "TokenId").HasName("table_name_pk");
 
-                            j.ToTable("table_name", "tickets");
+                            j.ToTable("userTokens", "tickets");
 
                             j.IndexerProperty<int>("UserId").HasColumnName("user_id");
 
