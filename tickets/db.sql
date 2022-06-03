@@ -341,4 +341,21 @@ alter table tickets.payments
     alter column transaction_id varchar(32) null
 go
 
+-- add card data to paymentTokens table
+alter table tickets.paymentTokens
+    add card_brand varchar(50)
+go
+
+alter table tickets.paymentTokens
+    add exp_month int
+go
+
+alter table tickets.paymentTokens
+    add exp_year int
+go
+
+alter table tickets.paymentTokens
+    add last4 int
+go
+
 

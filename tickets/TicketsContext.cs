@@ -212,6 +212,17 @@ namespace tickets
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.CardBrand)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("card_brand");
+
+                entity.Property(e => e.ExpMonth).HasColumnName("exp_month");
+
+                entity.Property(e => e.ExpYear).HasColumnName("exp_year");
+
+                entity.Property(e => e.Last4).HasColumnName("last4");
+
                 entity.Property(e => e.Token)
                     .HasMaxLength(32)
                     .IsUnicode(false)
