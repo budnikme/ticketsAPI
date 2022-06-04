@@ -22,18 +22,18 @@ public class AuthService : IAuthService
         _context = context;
     }
     
-    public async Task<string?> Register(UserDto userDto)
+    public async Task<string?> Register(RegisterDto registerDto)
     {
-        CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+        CreatePasswordHash(registerDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
         Console.WriteLine(Encoding.Default.GetString(passwordHash));
         User user = new User
         {
-            Email = userDto.Email,
+            Email = registerDto.Email,
             PasswordHash = passwordHash,
             PasswordSalt = passwordSalt,
-            Name = userDto.Name,
-            LastName = userDto.LastName,
-            PhoneNumber = userDto.PhoneNumber,
+            Name = registerDto.Name,
+            LastName = registerDto.LastName,
+            PhoneNumber = registerDto.PhoneNumber,
             Type = "User"
         };
         _context.Users.Add(user);

@@ -16,9 +16,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult> Register(UserDto userDto)
+    public async Task<ActionResult> Register(RegisterDto registerDto)
     {
-        var token = await _authService.Register(userDto);
+        var token = await _authService.Register(registerDto);
         if (token==null)
         {
             return BadRequest("User already exists");
