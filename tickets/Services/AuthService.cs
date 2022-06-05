@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 using tickets.Dto;
 using tickets.Models.Entities;
 
@@ -36,13 +37,22 @@ public class AuthService : IAuthService
             PhoneNumber = registerDto.PhoneNumber,
             Type = "User"
         };
-        _context.Users.Add(user);
+        //create customer object for new user on the stripes server side
+        var options = new CustomerCreateOptions
+        {
+            Email = registerDto.Email,
+        };
+        var service = new CustomerService();
         try
         {
+            var customer = await service.CreateAsync(options);
+            user.StripeId = customer.Id;
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Console.WriteLine(e);
             return null;
         }
         return CreateToken(user.Id);

@@ -20,6 +20,7 @@ namespace tickets.Models.Entities
         public byte[] PasswordHash { get; set; } = null!;
         public byte[] PasswordSalt { get; set; } = null!;
         public string Type { get; set; } = null!;
+        public string? StripeId { get; set; }
 
         public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }

@@ -355,6 +355,11 @@ namespace tickets
                     .IsUnicode(false)
                     .HasColumnName("phone_number");
 
+                entity.Property(e => e.StripeId)
+                    .HasMaxLength(32)
+                    .IsUnicode(false)
+                    .HasColumnName("stripe_id");
+
                 entity.Property(e => e.Type)
                     .HasMaxLength(32)
                     .IsUnicode(false)

@@ -357,5 +357,9 @@ go
 alter table tickets.paymentTokens
     add last4 int
 go
+-- add stripe customer id
+alter table tickets.users
+    add stripe_id varchar(32)
+go
 
 

@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Stripe;
 using Swashbuckle.AspNetCore.Filters;
 using tickets;
 using tickets.Services;
@@ -23,6 +24,9 @@ builder.Services.AddScoped<ITicketsService, TicketsService>(); //ticketsService 
 builder.Services.AddScoped<IAdminService, AdminService>(); //adminService dependency injection
 builder.Services.AddScoped<IArtistsService,ArtistsService>(); //artistsService dependency injection
 builder.Services.AddScoped<IGenresService,GenresService>(); //genresService dependency injection
+builder.Services.AddScoped<IPaymentService,PaymentService>(); //paymentService dependency injection
+//configuring stripe secret key
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("AppSettings:StripeKey").Value;
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen(options => {
