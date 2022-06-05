@@ -9,6 +9,7 @@ namespace tickets.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "User,Admin")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -20,7 +21,7 @@ public class UserController : ControllerBase
         //getting users id
         _userId = int.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
     }
-    [HttpGet,Authorize]
+    [HttpGet]
     public async Task<ActionResult<ServiceResponse<UserViewDto>>> GetMe()
     {
         ServiceResponse<UserViewDto> response = await _userService.GetMe(_userId);
