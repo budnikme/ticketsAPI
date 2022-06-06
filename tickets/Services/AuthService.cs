@@ -60,14 +60,23 @@ public class AuthService : IAuthService
 
     public async Task<string?> Login(LoginDto loginDto)
     {
-        var currentUser = await (from user in _context.Users
-            where user.Email == loginDto.Email
-            select new {user.Id,user.PasswordHash, user.PasswordSalt, user.Type}).FirstAsync();
-        if (VerifyPasswordHash(loginDto.Password, currentUser.PasswordHash,
-                currentUser.PasswordSalt))
+        try
         {
-            return CreateToken(currentUser.Id,currentUser.Type);
+            var currentUser = await (from user in _context.Users
+                where user.Email == loginDto.Email
+                select new {user.Id, user.PasswordHash, user.PasswordSalt, user.Type}).FirstAsync();
+            if (VerifyPasswordHash(loginDto.Password, currentUser.PasswordHash,
+                    currentUser.PasswordSalt))
+            {
+                return CreateToken(currentUser.Id,currentUser.Type);
+            }
         }
+        catch (Exception e)
+        {
+            return null;
+        }
+        
+        
         return null;
     }
     

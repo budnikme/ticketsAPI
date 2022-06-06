@@ -21,6 +21,7 @@ public class TicketsService : ITicketsService
             var query = await (from t in _context.TicketTypes where t.EventId == eventId
                 select new TicketTypeDto
                 {
+                    Id = t.Id,
                     Tittle = t.Tittle,
                     Description = t.Description,
                     Count = t.Count,
